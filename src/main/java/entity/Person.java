@@ -1,6 +1,8 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Person {
@@ -10,8 +12,23 @@ public class Person {
     private Long p_id;
     private String name;
     private int year;
+
     @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
+    List<Fee> fees;
+
+    public List<Fee> getFees() {
+        return fees;
+    }
+
+    public void AddFee(Fee fee){
+        this.fees.add(fee);
+        if (fee != null){
+            fee.setPerson(this);
+        }
+    }
 
     public Person() {
     }
@@ -19,6 +36,7 @@ public class Person {
     public Person(String name, int year) {
         this.name = name;
         this.year = year;
+        this.fees = new ArrayList<>();
     }
 
     public Address getAddress() {
