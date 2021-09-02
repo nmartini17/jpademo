@@ -10,6 +10,8 @@ public class Person {
     private Long p_id;
     private String name;
     private int year;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Address address;
 
     public Person() {
     }
@@ -17,6 +19,17 @@ public class Person {
     public Person(String name, int year) {
         this.name = name;
         this.year = year;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+        if(address != null){
+            address.setPerson(this);
+        }
     }
 
     public Long getP_id() {
