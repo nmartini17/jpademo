@@ -19,6 +19,9 @@ public class Person {
     @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
     List<Fee> fees;
 
+    @ManyToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
+    List<SwimStyle> styles;
+
     public List<Fee> getFees() {
         return fees;
     }
@@ -30,6 +33,20 @@ public class Person {
         }
     }
 
+    public void AddSwimStyle(SwimStyle style){
+        if (style != null){
+        this.styles.add(style);
+            style.getPersons().add(this);
+        }
+    }
+
+    public void removeSwimStyle(SwimStyle swimStyle){
+        if (swimStyle != null){
+            styles.remove(swimStyle);
+            swimStyle.getPersons().remove(this);
+        }
+    }
+
     public Person() {
     }
 
@@ -37,6 +54,7 @@ public class Person {
         this.name = name;
         this.year = year;
         this.fees = new ArrayList<>();
+        this.styles = new ArrayList<>();
     }
 
     public Address getAddress() {

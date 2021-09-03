@@ -28,9 +28,22 @@ public class Tester {
         p1.AddFee(f3);
         p2.AddFee(f2);
 
+        SwimStyle s1 = new SwimStyle("Crawl");
+        SwimStyle s2 = new SwimStyle("ButterFly");
+        SwimStyle s3 = new SwimStyle("Breast Stroke");
+
+        p1.AddSwimStyle(s1);
+        p1.AddSwimStyle(s3);
+        p2.AddSwimStyle(s2);
+
+
         em.getTransaction().begin();
-        em.persist(p1);
-        em.persist(p2);
+            em.persist(p1);
+            em.persist(p2);
+        em.getTransaction().commit();
+
+        em.getTransaction().begin();
+            p1.removeSwimStyle(s3);
         em.getTransaction().commit();
 
         System.out.println("P1: " + p1.getP_id() + ", " + p1.getName());
